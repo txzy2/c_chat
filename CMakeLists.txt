@@ -7,4 +7,6 @@ add_executable(test_c main.c
         include/types.h
         include/chat.h
         src/chat.c
-        include/chat_message.h)
+        src/chat_message.c
+        include/chat_message.h
+        include/vector.h)

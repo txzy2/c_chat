@@ -15,7 +15,6 @@ int main()
 
     Chat c;
     init_chat(&c, "Диалог 1");
-    //TODO: Инициализировать вектор сообщений
 
     for (size_t i = 0; i < LEN(users); i++)
     {
@@ -31,9 +30,19 @@ int main()
         print_user(c.users[i]);
     }
 
+    ChatMsgVec cmv;
+    init_chat_msg_vec(&cmv);
+
     ChatMessage msg = {.id = 1, .text = "Test Message", .chat = &c, .from = &users[0], .to = &users[1]};
-    //TODO: Добавить логику пуша в вектор
+    push_msg_to_vec(&cmv, &msg);
+
+    ChatMessage** msg_arr = (ChatMessage**)cmv.v.data;
+    for (size_t i = 0; i < cmv.v.size; i++)
+    {
+        printf("ID: %d, text: %s", msg_arr[i]->id, msg_arr[i]->text);
+    }
 
     free_chat(&c);
+    free_chat_msg_vec(&cmv);
     return 0;
 }
