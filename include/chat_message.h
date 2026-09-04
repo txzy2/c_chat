@@ -5,7 +5,8 @@
 #include "chat.h"
 #include "vector.h"
 
-typedef struct {
+typedef struct
+{
     int id;
     char text[CHAT_MSG_LEN];
 
@@ -14,7 +15,8 @@ typedef struct {
     User* to;
 } ChatMessage;
 
-typedef struct {
+typedef struct
+{
     Vector v;
 } ChatMsgVec;
 
