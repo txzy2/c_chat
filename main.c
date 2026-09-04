@@ -15,6 +15,8 @@ int main()
 
     Chat c;
     init_chat(&c, "Диалог 1");
+    //TODO: Инициализировать вектор сообщений
+
     for (size_t i = 0; i < LEN(users); i++)
     {
         if (!add_user_to_chat(&c, &users[i]))
@@ -30,6 +32,7 @@ int main()
     }
 
     ChatMessage msg = {.id = 1, .text = "Test Message", .chat = &c, .from = &users[0], .to = &users[1]};
+    //TODO: Добавить логику пуша в вектор
 
     free_chat(&c);
     return 0;
