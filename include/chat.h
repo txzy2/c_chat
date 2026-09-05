@@ -6,16 +6,14 @@
 #define TEST_C_CHAT_H
 
 #include "types.h"
+#include "vector.h"
 
 typedef struct
 {
     int id;
     char title[CHAT_TITLE_LEN];
 
-    User** users;
-
-    int size;
-    int capacity;
+    Vector users;
 } Chat;
 
 bool init_chat(Chat* c, const char* title);

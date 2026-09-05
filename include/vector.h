@@ -10,7 +10,7 @@ typedef struct
     size_t size, capacity, elem_size;
 } Vector;
 
-static void vector_init(Vector* v, size_t elem_size)
+static void vector_init(Vector* v, const size_t elem_size)
 {
     v->data = NULL;
     v->size = 0;
@@ -29,7 +29,7 @@ static void vector_push(Vector* v, const void* elem)
     v->size++;
 }
 
-static void* vector_get(Vector* v, size_t index)
+static void* vector_get(const Vector* v, const size_t index)
 {
     return (char*)v->data + index * v->elem_size;
 }

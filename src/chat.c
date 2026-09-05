@@ -11,12 +11,10 @@ bool init_chat(Chat* c, const char* title)
     strncpy(c->title, title, CHAT_TITLE_LEN - 1);
     c->title[CHAT_TITLE_LEN - 1] = '\0';
 
-    c->size = 0;
-    c->capacity = 1;
-    c->users = malloc(c->capacity * sizeof(*c->users));
-    c->id = c->size == 0 ? 1 : c->size + 1;
+    vector_init(&c->users, sizeof(User*));
+    c->id = 1;
 
-    return c->users != NULL;
+    return true;
 }
 
 bool find_user(Chat* c, const int id)
@@ -26,9 +24,10 @@ bool find_user(Chat* c, const int id)
         return false;
     }
 
-    for (int i = 0; i < c->size; i++)
+    for (size_t i = 0; i < c->users.size; i++)
     {
-        if (c->users[i]->id == id)
+        User** u = (User**)vector_get(&c->users, i);
+        if ((*u)->id == id)
         {
             return true;
         }
@@ -42,22 +41,7 @@ bool add_user_to_chat(Chat* c, User* u)
     if (!c || !u) { return false; }
     if (find_user(c, u->id)) { return false; }
 
-    if (c->size >= c->capacity)
-    {
-        const int new_capacity = c->capacity * 2;
-
-        User** tmp = realloc(c->users, new_capacity * sizeof(*c->users));
-        if (!tmp)
-        {
-            return false;
-        }
-
-        c->users = tmp;
-        c->capacity = new_capacity;
-    }
-
-    c->users[c->size] = u;
-    c->size++;
+    vector_push(&c->users, &u);
 
     return true;
 }
@@ -69,9 +53,8 @@ void free_chat(Chat* c)
         return;
     }
 
-    free(c->users);
-    c->users = NULL;
-    c->size = c->capacity = c->id = 0;
+    vector_free(&c->users);
+    c->id = 0;
 }
 
 void print_user(const User* u)

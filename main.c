@@ -3,6 +3,7 @@
 #include "include/chat.h"
 #include "include/types.h"
 #include "include/chat_message.h"
+#include "include/vector.h"
 
 #define LEN(x) sizeof(x) / sizeof(x[0])
 
@@ -25,9 +26,9 @@ int main()
     }
 
     printf("Chat %s (ID: %d)\n", c.title, c.id);
-    for (size_t i = 0; i < c.size; i++)
+    for (size_t i = 0; i < c.users.size; i++)
     {
-        print_user(c.users[i]);
+        print_user(*(User**)vector_get(&c.users, i));
     }
 
     ChatMsgVec cmv;
