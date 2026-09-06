@@ -10,7 +10,7 @@ bool push_msg_to_vec(ChatMsgVec* chmsvc, ChatMessage* msg) {
     return true;
 }
 
-ChatMessage* get_msg_from_vec(ChatMsgVec* chmsvc, size_t index) {
+ChatMessage* get_msg_from_vec(const ChatMsgVec * chmsvc, const size_t index) {
     ChatMessage** ptr = vector_get(&chmsvc->v, index);
     return *ptr;
 }

@@ -23,7 +23,13 @@ static void vector_push(Vector* v, const void* elem)
     if (v->size == v->capacity)
     {
         v->capacity = v->capacity ? v->capacity * 2 : 4;
-        v->data = realloc(v->data, v->capacity * v->elem_size);
+
+        void* new_data = realloc(v->data, v->capacity * v->elem_size);
+        if (!new_data)
+        {
+            abort();
+        }
+        v->data = new_data;
     }
     memcpy((char*)v->data + v->size * v->elem_size, elem, v->elem_size);
     v->size++;
